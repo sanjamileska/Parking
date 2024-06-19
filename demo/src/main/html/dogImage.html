@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Dog Generation</title>
+</head>
+<body>
+<h1>Random dog image generation</h1>
+<img id="dogImage" src="" alt="random dog" width="400"><br>
+<button id="generateBtn">Generate me a random dog</button>
+
+<script>
+    const fetchImage = () => {
+        fetch('http://localhost:8080/api/random-dog')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                document.getElementById('dogImage').src = data.message;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to fetch. Try again.');
+            });
+    }
+    fetchImage();
+    const btn = document.getElementById("generateBtn");
+    btn.addEventListener("click", fetchImage);
+</script>
+</body>
+</html>
